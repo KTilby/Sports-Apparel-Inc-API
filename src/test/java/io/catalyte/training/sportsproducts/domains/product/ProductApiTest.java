@@ -2,8 +2,10 @@ package io.catalyte.training.sportsproducts.domains.product;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,6 @@ public class ProductApiTest {
 
   @Autowired
   private WebApplicationContext wac;
-
   private MockMvc mockMvc;
 
   @Before
@@ -36,7 +37,8 @@ public class ProductApiTest {
 
   @Test
   public void getProductByIdReturnsProductWith200() throws Exception {
-    mockMvc.perform(get(PRODUCTS_PATH + "/1"))
+    mockMvc.perform(get(PRODUCTS_PATH + "/{id}", 1))
+        .andDo(print())
         .andExpect(status().isOk());
   }
 }
