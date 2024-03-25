@@ -37,18 +37,21 @@ public class Product {
 
   private Boolean active;
 
+  private Double price;
+
   public Product() {
   }
 
   public Product(String name, String description,
       String demographic, String category,
-      String type, String releaseDate) {
+      String type, String releaseDate, Double price) {
     this.name = name;
     this.description = description;
     this.demographic = demographic;
     this.category = category;
     this.type = type;
     this.releaseDate = releaseDate;
+    this.price = price;
   }
 
   public Long getId() {
@@ -147,6 +150,14 @@ public class Product {
     this.active = active;
   }
 
+  public Double getPrice() {
+    return price;
+  }
+
+  public void setPrice(Double price) {
+    this.price = price;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -195,6 +206,9 @@ public class Product {
         : product.globalProductCode != null) {
       return false;
     }
+    if (price != null ? !price.equals(product.price) : product.price != null) {
+      return false;
+    }
     return active != null ? active.equals(product.active) : product.active == null;
   }
 
@@ -211,6 +225,7 @@ public class Product {
     result = 31 * result + (styleNumber != null ? styleNumber.hashCode() : 0);
     result = 31 * result + (globalProductCode != null ? globalProductCode.hashCode() : 0);
     result = 31 * result + (active != null ? active.hashCode() : 0);
+    result = 31 * result + (price != null ? price.hashCode() : 0);
     return result;
   }
 
@@ -229,6 +244,7 @@ public class Product {
         ", styleNumber='" + styleNumber + '\'' +
         ", globalProductCode='" + globalProductCode + '\'' +
         ", active='" + active + '\'' +
+        ", price='" + String.format("%.2f", price) + '\'' +
         '}';
   }
 }
