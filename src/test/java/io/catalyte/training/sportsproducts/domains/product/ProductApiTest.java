@@ -35,6 +35,7 @@ public class ProductApiTest {
         .andExpect(status().isOk());
   }
 
+
   @Test
   public void getProductByIdReturnsProductWith200() throws Exception {
     mockMvc.perform(get(PRODUCTS_PATH + "/{id}", 1))
