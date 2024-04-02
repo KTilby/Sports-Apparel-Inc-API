@@ -42,15 +42,21 @@ public class Product {
   public Product() {
   }
 
-  public Product(String name, String description,
-      String demographic, String category,
-      String type, String releaseDate, Double price) {
+  public Product(Long id, String name, String description, String demographic, String category,
+      String type, String releaseDate, String primaryColorCode, String secondaryColorCode,
+      String styleNumber, String globalProductCode, Boolean active, Double price) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.demographic = demographic;
     this.category = category;
     this.type = type;
     this.releaseDate = releaseDate;
+    this.primaryColorCode = primaryColorCode;
+    this.secondaryColorCode = secondaryColorCode;
+    this.styleNumber = styleNumber;
+    this.globalProductCode = globalProductCode;
+    this.active = active;
     this.price = price;
   }
 
