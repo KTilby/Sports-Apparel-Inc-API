@@ -1,8 +1,7 @@
 package io.catalyte.training.sportsproducts.data;
 
 import io.catalyte.training.sportsproducts.domains.product.Product;
-import java.sql.Date;
-import java.sql.Time;
+import io.catalyte.training.sportsproducts.utils.RandomTextGenerator;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -18,26 +17,28 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class ProductFactory {
 
   private static final String[] colors = {
-      "beige",
-      "black",
-      "lightblue",
-      "darkblue",
-      "olive",
-      "red",
-      "orange",
-      "lavender",
-      "purple",
-      "aqua",
-      "green",
-      "khaki",
-      "darkgray",
-      "pink",
-      "lightgray"
+      "#000000|black",
+      "#73000A|garnet",
+      "#6CABDD|sky blue",
+      "#00008B|dark blue",
+      "#E0B0FF|mauve",
+      "#FF2247|infrared",
+      "#FFA500|orange",
+      "#FFF5EE|seashell",
+      "#800080|purple",
+      "#F6EB61|gold",
+      "#808000|olive",
+      "#FFDB58|mustard",
+      "#00FFEC|aqua",
+      "#FF00FF|fuchsia",
+      "#CEFF00|volt"
   };
+
   private static final String[] demographics = {
       "Men",
       "Women",
-      "Kids"
+      "Kids",
+      "Pets"
   };
   private static final String[] categories = {
       "Golf",
@@ -69,7 +70,7 @@ public class ProductFactory {
   private static final String[] types = {
       "Pant",
       "Short",
-      "Shoe",
+      "Shoes",
       "Glove",
       "Jacket",
       "Tank Top",
@@ -126,15 +127,30 @@ public class ProductFactory {
       13.43,
       16.99
   };
+  private static final String[] petCategories = {
+      "Spring Pole",
+      "Car Rides",
+      "Play Gyms",
+      "Swimming",
+      "Outdoor Adventure"
+  };
 
+  private static final String[] petNames = {
+      "Fit Paws",
+      "Woof Gear"
+  };
   /**
    * Returns a random category from the list of categories.
    *
    * @return - a category string
    */
-  public static String getCategory() {
+  public static String getCategory(String demographic) {
     Random randomGenerator = new Random();
-    return categories[randomGenerator.nextInt(categories.length)];
+    if ("Pets".equalsIgnoreCase(demographic)) {
+      return petCategories[randomGenerator.nextInt(petCategories.length)];
+    } else {
+      return categories[randomGenerator.nextInt(categories.length)];
+    }
   }
 
   /**
@@ -162,17 +178,21 @@ public class ProductFactory {
    *
    * @return - a name string
    */
-  public static String getName() {
+  public static String getName(String demographic) {
     Random randomGenerator = new Random();
-    return names[randomGenerator.nextInt(names.length)];
+    if ("Pets".equalsIgnoreCase(demographic)) {
+      return petNames[randomGenerator.nextInt(petNames.length)];
+    } else {
+      return names[randomGenerator.nextInt(names.length)];
+    }
   }
 
   /**
-   * Returns a random color from the list of colors.
+   * Returns a random color code and color name combined in a single string delimited by |.
    *
-   * @return - a color string
+   * @return - a string containing both color code and name
    */
-  public static String getColorCode() {
+  public static String getColorCodeWithName() {
     Random randomGenerator = new Random();
     return colors[randomGenerator.nextInt(colors.length)];
   }
@@ -197,9 +217,22 @@ public class ProductFactory {
     return adjectives[randomGenerator.nextInt(adjectives.length)];
   }
 
+  /**
+   * Returns a random long description between 200 - 500 chars of Lorem ipsum text.
+   *
+   * @return - a long string
+   */
+  public static String getLongDescription() {
+    return RandomTextGenerator.generateRandomText();
+  }
+
   public static Boolean getActive() {
     Random randomGenerator = new Random();
     return randomGenerator.nextBoolean();
+  }
+
+  public static Boolean getPets(String demographic) {
+    return "Pets".equalsIgnoreCase(demographic);
   }
 
   /**
@@ -237,7 +270,6 @@ public class ProductFactory {
     return LocalDate.ofEpochDay(randomDay);
   }
 
-
   /**
    * Generates a number of random products based on input.
    *
@@ -256,6 +288,20 @@ public class ProductFactory {
   }
 
   /**
+   * Loads distinct primary and secondary colors.
+   *
+   * @return - an array of two strings containing primary and secondary colors
+   */
+  public static String[] loadDistinctColors() {
+    String[] distinctColors = new String[2];
+    distinctColors[0] = getColorCodeWithName();
+    do {
+      distinctColors[1] = getColorCodeWithName();
+    } while (distinctColors[0].equals(distinctColors[1]));
+    return distinctColors;
+  }
+
+  /**
    * Uses random generators to build a product.
    *
    * @return - a randomly generated product
@@ -263,15 +309,19 @@ public class ProductFactory {
   public Product createRandomProduct() {
     Product product = new Product();
     String demographic = ProductFactory.getDemographic();
-    product.setCategory(ProductFactory.getCategory());
+    String[] distinctColors = loadDistinctColors();
+
+    product.setCategory(ProductFactory.getCategory(demographic));
     product.setType(ProductFactory.getType());
-    product.setPrimaryColorCode(ProductFactory.getColorCode());
-    product.setSecondaryColorCode(ProductFactory.getColorCode());
+    product.setPrimaryColorCodeWithName(distinctColors[0]);
+    product.setSecondaryColorCodeWithName(distinctColors[1]);
     product.setDescription(ProductFactory.getDescription());
-    product.setName(ProductFactory.getName());
+    product.setLongDescription(ProductFactory.getLongDescription());
+    product.setName(ProductFactory.getName(demographic));
     product.setPrice(ProductFactory.getPrice());
     product.setReleaseDate((between(ZonedDateTime.of(1921,01,31,00,00,00,00, ZoneId.systemDefault()).toLocalDate(), ZonedDateTime.now().toLocalDate())).toString());
     product.setActive(ProductFactory.getActive());
+    product.setPets(ProductFactory.getPets(demographic));
     product.setDemographic(demographic);
     product.setGlobalProductCode(ProductFactory.getRandomProductId());
     product.setStyleNumber(ProductFactory.getStyleCode());

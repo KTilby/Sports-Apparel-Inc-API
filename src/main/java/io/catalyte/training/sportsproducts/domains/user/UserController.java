@@ -29,13 +29,11 @@ public class UserController {
    * Controller method for logging the user in
    *
    * @param user        User to login
-   * @param bearerToken String value in the Authorization property of the header
    * @return User
    */
   @PostMapping()
   public ResponseEntity<User> createUser(
-      @RequestBody User user,
-      @RequestHeader("Authorization") String bearerToken
+      @RequestBody User user
   ) {
     logger.info("Request received for createUser");
     return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
@@ -46,17 +44,15 @@ public class UserController {
    *
    * @param id          Id of the user to update
    * @param user        User to update
-   * @param bearerToken String value in the Authorization property of the header
    * @return User - Updated user
    */
   @PutMapping(path = "/{id}")
   public ResponseEntity<User> updateUser(
       @PathVariable Long id,
-      @RequestBody User user,
-      @RequestHeader("Authorization") String bearerToken
+      @RequestBody User user
   ) {
     logger.info("Request received for updateUser");
-    return new ResponseEntity<>(userService.updateUser(bearerToken, id, user), HttpStatus.OK);
+    return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
   }
 
   /**

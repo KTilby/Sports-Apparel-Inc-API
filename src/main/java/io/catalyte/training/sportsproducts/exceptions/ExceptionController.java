@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.exceptions;
 
+import static io.catalyte.training.sportsproducts.constants.StringConstants.BAD_REQUEST;
 import static io.catalyte.training.sportsproducts.constants.StringConstants.NOT_FOUND;
 import static io.catalyte.training.sportsproducts.constants.StringConstants.SERVER_ERROR;
 
@@ -49,6 +50,14 @@ public class ExceptionController {
         new ExceptionResponse(SERVER_ERROR, new Date(), exception.getMessage());
 
     return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(BadRequest.class)
+  protected ResponseEntity<ExceptionResponse> badRequest(BadRequest exception) {
+    ExceptionResponse response =
+        new ExceptionResponse(BAD_REQUEST, new Date(), exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
   /**
