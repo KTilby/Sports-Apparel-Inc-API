@@ -2,7 +2,6 @@ package io.catalyte.training.sportsproducts.domains.user;
 
 import static io.catalyte.training.sportsproducts.constants.Roles.CUSTOMER;
 
-import io.catalyte.training.sportsproducts.auth.GoogleAuthService;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import org.apache.logging.log4j.LogManager;
@@ -21,12 +20,10 @@ public class UserServiceImpl implements UserService {
 
   private final Logger logger = LogManager.getLogger(UserController.class);
   private final UserRepository userRepository;
-  private final GoogleAuthService googleAuthService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, GoogleAuthService googleAuthService) {
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.googleAuthService = googleAuthService;
   }
 
   // METHODS
@@ -34,19 +31,18 @@ public class UserServiceImpl implements UserService {
   /**
    * Updates user given valid credentials
    *
-   * @param bearerToken String value in the Authorization property of the header
    * @param id          Id of the user to update
    * @param updatedUser User to update
    * @return User - Updated user
    */
   @Override
-  public User updateUser(String bearerToken, Long id, User updatedUser) {
+  public User updateUser(Long id, User updatedUser) {
 
     // AUTHENTICATES USER - SAME EMAIL, SAME PERSON
-    boolean isAuthenticated = googleAuthService.authenticateUser(bearerToken, updatedUser);
+    boolean isAuthenticated = updatedUser.id.equals(id);
 
     if (!isAuthenticated) {
-      logger.error("Email in the request body does not match email from JWT");
+      logger.error("Id in the request body does not match id from JWT");
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           "Email in the request body does not match email from JWT Token");
     }

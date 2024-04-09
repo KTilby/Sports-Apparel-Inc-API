@@ -5,6 +5,8 @@ import io.catalyte.training.sportsproducts.domains.product.ProductRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
 import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
+import io.catalyte.training.sportsproducts.domains.user.Customer;
+import io.catalyte.training.sportsproducts.domains.user.CustomerRepository;
 import io.catalyte.training.sportsproducts.domains.user.*;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +29,9 @@ public class DemoData implements CommandLineRunner {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private CustomerRepository customerRepository;
 
   @Autowired
   private ProductRepository productRepository;
@@ -95,8 +100,20 @@ public class DemoData implements CommandLineRunner {
     Purchase purchase4 = new Purchase();
     billingAddress.setEmail("blah");
 
-    User user = new User("amir@amir.com", "Customer", "Amir", "Sharapov");
+    User user = new User("user@sportsapi.com", "P@$$w0rd", "Admin", "John", "Smith" );
     userRepository.save(user);
+
+    Customer herman = new Customer("herman@munsters.tv", "P@$$w0rd","Customer", "Herman", "Munster",
+        "1313 Mockingbird Ln", "", "Montgomery",
+        "AL", "36043", "1313 Mockingbird Ln", "",
+        "Montgomery", "AL", "36043");
+    customerRepository.save(herman);
+
+    Customer sherlock = new Customer("elementary@watson.uk", "P@$$w0rd", "Customer", "Sherlock", "Holmes",
+        "221B Baker St", "", "London",
+        "UK", "NW1 6XE", "20 W 34th St", "Apartment 37C",
+        "New York", "NY", "10001");
+    customerRepository.save(sherlock);
 
     purchase4.setBillingAddress(billingAddress);
 

@@ -19,6 +19,8 @@ public class Product {
 
   private String description;
 
+  private String longDescription;
+
   private String demographic;
 
   private String category;
@@ -27,9 +29,9 @@ public class Product {
 
   private String releaseDate;
 
-  private String primaryColorCode;
+  private String primaryColorCodeWithName;
 
-  private String secondaryColorCode;
+  private String secondaryColorCodeWithName;
 
   private String styleNumber;
 
@@ -37,26 +39,32 @@ public class Product {
 
   private Boolean active;
 
+  private Boolean pets;
+
   private Double price;
 
   public Product() {
   }
 
-  public Product(Long id, String name, String description, String demographic, String category,
-      String type, String releaseDate, String primaryColorCode, String secondaryColorCode,
-      String styleNumber, String globalProductCode, Boolean active, Double price) {
+  public Product(Long id, String name, String description, String longDescription,
+      String demographic,
+      String category, String type, String releaseDate, String primaryColorCodeWithName,
+      String secondaryColorCodeWithName, String styleNumber, String globalProductCode, Boolean active,
+      Boolean pets, Double price) {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.longDescription = longDescription;
     this.demographic = demographic;
     this.category = category;
     this.type = type;
     this.releaseDate = releaseDate;
-    this.primaryColorCode = primaryColorCode;
-    this.secondaryColorCode = secondaryColorCode;
+    this.primaryColorCodeWithName = primaryColorCodeWithName;
+    this.secondaryColorCodeWithName = secondaryColorCodeWithName;
     this.styleNumber = styleNumber;
     this.globalProductCode = globalProductCode;
     this.active = active;
+    this.pets = pets;
     this.price = price;
   }
 
@@ -82,6 +90,14 @@ public class Product {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getLongDescription() {
+    return longDescription;
+  }
+
+  public void setLongDescription(String longDescription) {
+    this.longDescription = longDescription;
   }
 
   public String getDemographic() {
@@ -116,20 +132,20 @@ public class Product {
     this.releaseDate = releaseDate;
   }
 
-  public String getPrimaryColorCode() {
-    return primaryColorCode;
+  public String getPrimaryColorCodeWithName() {
+    return primaryColorCodeWithName;
   }
 
-  public void setPrimaryColorCode(String primaryColorCode) {
-    this.primaryColorCode = primaryColorCode;
+  public void setPrimaryColorCodeWithName(String primaryColorCodeWithName) {
+    this.primaryColorCodeWithName = primaryColorCodeWithName;
   }
 
-  public String getSecondaryColorCode() {
-    return secondaryColorCode;
+  public String getSecondaryColorCodeWithName() {
+    return secondaryColorCodeWithName;
   }
 
-  public void setSecondaryColorCode(String secondaryColorCode) {
-    this.secondaryColorCode = secondaryColorCode;
+  public void setSecondaryColorCodeWithName(String secondaryColorCodeWithName) {
+    this.secondaryColorCodeWithName = secondaryColorCodeWithName;
   }
 
   public String getStyleNumber() {
@@ -154,6 +170,14 @@ public class Product {
 
   public void setActive(Boolean active) {
     this.active = active;
+  }
+
+  public Boolean getPets() {
+    return pets;
+  }
+
+  public void setPets(Boolean pets) {
+    this.pets = pets;
   }
 
   public Double getPrice() {
@@ -182,6 +206,10 @@ public class Product {
         : product.description != null) {
       return false;
     }
+    if (longDescription != null ? !longDescription.equals(product.longDescription)
+        : product.longDescription != null) {
+      return false;
+    }
     if (demographic != null ? !demographic.equals(product.demographic)
         : product.demographic != null) {
       return false;
@@ -196,12 +224,12 @@ public class Product {
         : product.releaseDate != null) {
       return false;
     }
-    if (primaryColorCode != null ? !primaryColorCode.equals(product.primaryColorCode)
-        : product.primaryColorCode != null) {
+    if (primaryColorCodeWithName != null ? !primaryColorCodeWithName.equals(product.primaryColorCodeWithName)
+        : product.primaryColorCodeWithName != null) {
       return false;
     }
-    if (secondaryColorCode != null ? !secondaryColorCode.equals(product.secondaryColorCode)
-        : product.secondaryColorCode != null) {
+    if (secondaryColorCodeWithName != null ? !secondaryColorCodeWithName.equals(product.secondaryColorCodeWithName)
+        : product.secondaryColorCodeWithName != null) {
       return false;
     }
     if (styleNumber != null ? !styleNumber.equals(product.styleNumber)
@@ -215,22 +243,27 @@ public class Product {
     if (price != null ? !price.equals(product.price) : product.price != null) {
       return false;
     }
-    return active != null ? active.equals(product.active) : product.active == null;
+    if (active != null ? !active.equals(product.active) : product.active != null) {
+      return false;
+    }
+    return pets != null ? pets.equals(product.pets) : product.pets == null;
   }
 
   @Override
   public int hashCode() {
     int result = name != null ? name.hashCode() : 0;
     result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (longDescription != null ? longDescription.hashCode() : 0);
     result = 31 * result + (demographic != null ? demographic.hashCode() : 0);
     result = 31 * result + (category != null ? category.hashCode() : 0);
     result = 31 * result + (type != null ? type.hashCode() : 0);
     result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-    result = 31 * result + (primaryColorCode != null ? primaryColorCode.hashCode() : 0);
-    result = 31 * result + (secondaryColorCode != null ? secondaryColorCode.hashCode() : 0);
+    result = 31 * result + (primaryColorCodeWithName != null ? primaryColorCodeWithName.hashCode() : 0);
+    result = 31 * result + (secondaryColorCodeWithName != null ? secondaryColorCodeWithName.hashCode() : 0);
     result = 31 * result + (styleNumber != null ? styleNumber.hashCode() : 0);
     result = 31 * result + (globalProductCode != null ? globalProductCode.hashCode() : 0);
     result = 31 * result + (active != null ? active.hashCode() : 0);
+    result = 31 * result + (pets != null ? pets.hashCode() : 0);
     result = 31 * result + (price != null ? price.hashCode() : 0);
     return result;
   }
@@ -241,15 +274,17 @@ public class Product {
         "id=" + id +
         ", name='" + name + '\'' +
         ", description='" + description + '\'' +
+        ", longDescription='" + longDescription + '\'' +
         ", demographic='" + demographic + '\'' +
         ", category='" + category + '\'' +
         ", type='" + type + '\'' +
         ", releaseDate='" + releaseDate + '\'' +
-        ", primaryColorCode='" + primaryColorCode + '\'' +
-        ", secondaryColorCode='" + secondaryColorCode + '\'' +
+        ", primaryColorCodeWithName='" + primaryColorCodeWithName + '\'' +
+        ", secondaryColorCodeWithName='" + secondaryColorCodeWithName + '\'' +
         ", styleNumber='" + styleNumber + '\'' +
         ", globalProductCode='" + globalProductCode + '\'' +
         ", active='" + active + '\'' +
+        ", pets='" + pets + '\'' +
         ", price='" + String.format("%.2f", price) + '\'' +
         '}';
   }
