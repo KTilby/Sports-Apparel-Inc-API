@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public User updateUser(Long id, User updatedUser) {
 
+    // GIVE THE USER ID IF NOT SPECIFIED IN BODY TO AVOID DUPLICATE USERS
+    if (updatedUser.getId() == null) {
+      updatedUser.setId(id);
+    }
+
     // AUTHENTICATES USER - SAME EMAIL, SAME PERSON
     boolean isAuthenticated = updatedUser.id.equals(id);
 
@@ -65,10 +70,7 @@ public class UserServiceImpl implements UserService {
     // TEMPORARY LOGIC TO PREVENT USER FROM UPDATING THEIR ROLE
     updatedUser.setRole(existingUser.getRole());
 
-    // GIVE THE USER ID IF NOT SPECIFIED IN BODY TO AVOID DUPLICATE USERS
-    if (updatedUser.getId() == null) {
-      updatedUser.setId(id);
-    }
+
 
     try {
       logger.info("Saved user to");

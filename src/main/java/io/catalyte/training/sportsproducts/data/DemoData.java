@@ -106,13 +106,13 @@ public class DemoData implements CommandLineRunner {
     Customer herman = new Customer("herman@munsters.tv", "P@$$w0rd","Customer", "Herman", "Munster",
         "1313 Mockingbird Ln", "", "Montgomery",
         "AL", "36043", "1313 Mockingbird Ln", "",
-        "Montgomery", "AL", "36043");
+        "Montgomery", "AL", "36043", "111-111-1111");
     customerRepository.save(herman);
 
     Customer sherlock = new Customer("elementary@watson.uk", "P@$$w0rd", "Customer", "Sherlock", "Holmes",
-        "221B Baker St", "", "London",
-        "UK", "NW1 6XE", "20 W 34th St", "Apartment 37C",
-        "New York", "NY", "10001");
+        "221B Baker St", "", "Columbia",
+        "SC", "NW1 6XE", "20 W 34th St", "Apartment 37C",
+        "New York", "NY", "10001", "222-222-2222");
     customerRepository.save(sherlock);
 
     purchase4.setBillingAddress(billingAddress);

@@ -34,7 +34,7 @@ public class PurchaseController {
 
     purchaseService.savePurchase(purchase);
 
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   @GetMapping
