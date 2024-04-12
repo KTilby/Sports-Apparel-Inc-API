@@ -68,6 +68,27 @@ public class Product {
     this.price = price;
   }
 
+  public Product(String name, String description, String longDescription, String demographic,
+      String category, String type, String releaseDate, String primaryColorCodeWithName,
+      String secondaryColorCodeWithName, String styleNumber, String globalProductCode,
+      Boolean active,
+      Boolean pets, Double price) {
+    this.name = name;
+    this.description = description;
+    this.longDescription = longDescription;
+    this.demographic = demographic;
+    this.category = category;
+    this.type = type;
+    this.releaseDate = releaseDate;
+    this.primaryColorCodeWithName = primaryColorCodeWithName;
+    this.secondaryColorCodeWithName = secondaryColorCodeWithName;
+    this.styleNumber = styleNumber;
+    this.globalProductCode = globalProductCode;
+    this.active = active;
+    this.pets = pets;
+    this.price = price;
+  }
+
   public Long getId() {
     return id;
   }

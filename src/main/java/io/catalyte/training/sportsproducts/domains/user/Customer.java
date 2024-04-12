@@ -1,10 +1,11 @@
 package io.catalyte.training.sportsproducts.domains.user;
 
 import javax.persistence.Entity;
+import java.util.Arrays;
 
 @Entity
 public class Customer extends User{
-  String shippingAddress1, shippingAddress2, shippingCity, shippingState, shippingZipCode,
+  String phoneNumber, shippingAddress1, shippingAddress2, shippingCity, shippingState, shippingZipCode,
       billingAddress1, billingAddress2, billingCity, billingState, billingZipCode;
 
   Object[] wishlist;
@@ -15,7 +16,7 @@ public class Customer extends User{
   public Customer(Long id, String email, String password, String role, String firstName, String lastName,
       String shippingAddress1, String shippingAddress2, String shippingCity, String shippingState,
       String shippingZipCode, String billingAddress1, String billingAddress2, String billingCity,
-      String billingState, String billingZipCode) {
+      String billingState, String billingZipCode, String phoneNumber) {
     super(email, password, role, firstName, lastName);
     this.shippingAddress1 = shippingAddress1;
     this.shippingAddress2 = shippingAddress2;
@@ -27,12 +28,13 @@ public class Customer extends User{
     this.billingCity = billingCity;
     this.billingState = billingState;
     this.billingZipCode = billingZipCode;
+    this.phoneNumber = phoneNumber;
   }
 
   public Customer(String email, String password, String role, String firstName, String lastName,
       String shippingAddress1, String shippingAddress2, String shippingCity, String shippingState,
       String shippingZipCode, String billingAddress1, String billingAddress2, String billingCity,
-      String billingState, String billingZipCode) {
+      String billingState, String billingZipCode, String phoneNumber) {
     super(email, password, role, firstName, lastName);
     this.shippingAddress1 = shippingAddress1;
     this.shippingAddress2 = shippingAddress2;
@@ -44,6 +46,7 @@ public class Customer extends User{
     this.billingCity = billingCity;
     this.billingState = billingState;
     this.billingZipCode = billingZipCode;
+    this.phoneNumber = phoneNumber;
   }
 
   public String getShippingAddress1() {
@@ -142,24 +145,36 @@ public class Customer extends User{
     this.savedCart = savedCart;
   }
 
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
   @Override
   public String toString() {
     return "Customer{" +
-        "shippingAddress1='" + shippingAddress1 + '\'' +
-        ", billingAddress1='" + billingAddress1 + '\'' +
-        ", shippingAddress2='" + shippingAddress2 + '\'' +
-        ", billingAddress2='" + billingAddress2 + '\'' +
-        ", shippingCity='" + shippingCity + '\'' +
-        ", billingCity='" + billingCity + '\'' +
-        ", shippingState='" + shippingState + '\'' +
-        ", billingState='" + billingState + '\'' +
-        ", shippingZipCode='" + shippingZipCode + '\'' +
-        ", billingZipCode='" + billingZipCode + '\'' +
-        ", id=" + id +
-        ", email='" + email + '\'' +
-        ", role='" + role + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        '}';
+            "phoneNumber='" + phoneNumber + '\'' +
+            ", shippingAddress1='" + shippingAddress1 + '\'' +
+            ", shippingAddress2='" + shippingAddress2 + '\'' +
+            ", shippingCity='" + shippingCity + '\'' +
+            ", shippingState='" + shippingState + '\'' +
+            ", shippingZipCode='" + shippingZipCode + '\'' +
+            ", billingAddress1='" + billingAddress1 + '\'' +
+            ", billingAddress2='" + billingAddress2 + '\'' +
+            ", billingCity='" + billingCity + '\'' +
+            ", billingState='" + billingState + '\'' +
+            ", billingZipCode='" + billingZipCode + '\'' +
+            ", wishlist=" + Arrays.toString(wishlist) +
+            ", savedCart=" + Arrays.toString(savedCart) +
+            ", id=" + id +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", role='" + role + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
   }
 }

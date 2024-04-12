@@ -132,7 +132,7 @@ public class ProductFactory {
       "Car Rides",
       "Play Gyms",
       "Swimming",
-      "Outdoor Adventure"
+      "Outdoors"
   };
 
   private static final String[] petNames = {
